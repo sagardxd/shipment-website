@@ -22,12 +22,36 @@ async function sendOTP(phoneNumber: string) {
   }
 }
 
+//function for verifying otp
+async function verifyOTP(phoneNumber: string, otpCode: string) {
+  try {
+      const verificationCheck = await client.verify.services(verifySid).verificationChecks.create({ to: phoneNumber, code: otpCode });
+      console.log("OTP verification status:", verificationCheck.status);
+      return verificationCheck.status === 'approved'; // Return true if verification is successful
+  } catch (error) {
+      console.error("Error verifying OTP:", error);
+      return false; // Return false if verification fails
+  }
+}
+
 // Sample route to initiate OTP sending
 app.post("/send-otp", async (req: Request, res: Response) => {
   const { phoneNumber } = req.body;
   await sendOTP(phoneNumber);
   res.status(200).json({ message: "OTP sent successfully." });
 });
+
+//Route to verify the otp
+app.post("/verify", async (req: Request, res: Response) => {
+  const { phoneNumber, otpCode } = req.body;
+  const isVerified = await verifyOTP(phoneNumber, otpCode);
+
+  if (isVerified) {
+    res.status(200).json({ message: "OTP verified successfully." });
+} else {
+    res.status(400).json({ message: "Invalid OTP." });
+}
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
