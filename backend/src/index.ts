@@ -1,57 +1,20 @@
 import express, { Request, Response } from 'express';
+import otpRoute from './routes/otpRoutes'
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Twillo stuff
-const accountSid = "AC66bcd0e082e03b41a347f1a7208d9812";
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const verifySid = "VA72f2e5e8c17ca3c01128b8af2687b3bc";
-const client = require("twilio")(accountSid, authToken);
-
 const app = express();
 const PORT = process.env.PORT ;
+
 app.use(express.json());
+app.use("/login", otpRoute)
 
-//function for sending otp
-async function sendOTP(phoneNumber: string) {
-  try {
-      await client.verify.services(verifySid).verifications.create({ to: phoneNumber, channel: "sms" });
-      console.log("OTP sent successfully.");
-  } catch (error) {
-      console.error("Error sending OTP:", error);
-  }
-}
 
-//function for verifying otp
-async function verifyOTP(phoneNumber: string, otpCode: string) {
-  try {
-      const verificationCheck = await client.verify.services(verifySid).verificationChecks.create({ to: phoneNumber, code: otpCode });
-      console.log("OTP verification status:", verificationCheck.status);
-      return verificationCheck.status === 'approved'; // Return true if verification is successful
-  } catch (error) {
-      console.error("Error verifying OTP:", error);
-      return false; // Return false if verification fails
-  }
-}
-
-// Sample route to initiate OTP sending
-app.post("/send-otp", async (req: Request, res: Response) => {
-  const { phoneNumber } = req.body;
-  await sendOTP(phoneNumber);
-  res.status(200).json({ message: "OTP sent successfully." });
+//home
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).json({ message: "howdy" });
 });
 
-//Route to verify the otp
-app.post("/verify", async (req: Request, res: Response) => {
-  const { phoneNumber, otpCode } = req.body;
-  const isVerified = await verifyOTP(phoneNumber, otpCode);
-
-  if (isVerified) {
-    res.status(200).json({ message: "OTP verified successfully." });
-} else {
-    res.status(400).json({ message: "Invalid OTP." });
-}
-})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
