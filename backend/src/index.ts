@@ -10,13 +10,19 @@ const PORT = process.env.PORT ;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/login", otpRoute)
-
+app.use("/login", otpRoute);
 
 //home
 app.get("/", verifyJWT ,(req: Request, res: Response) => {
   res.status(200).json({ message: "howdy" });
 });
+
+app.get("/logout", verifyJWT, (req: Request, res: Response) => {
+  // Destroy session and invalidate JWT on the server
+  res.clearCookie('jwt'); // Remove JWT from client-side storage
+  res.status(200).json({ message: "Logout successful." });
+})
+
 
 
 app.listen(PORT, () => {
