@@ -7,13 +7,4 @@
 ```bash
 git clone https://github.com/sagardxd/shipment-website.git
 ```
-2. Install the dependencies:
-
-```bash
-npm i
-```
-3. Run:
-
-```bash
-npm run dev
-```
+adding more guide soon
