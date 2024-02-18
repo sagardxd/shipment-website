@@ -9,3 +9,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  phoneNumber Int
+}
+
+model Trackshipment {
+  id Int @id @default(autoincrement())
+  awbNumber String
+  status String
+}
