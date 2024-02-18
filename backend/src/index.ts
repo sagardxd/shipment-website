@@ -11,6 +11,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cookieParser());
 app.use("/login", otpRoute);
+app.use("register",registerRoute)
 
 //home
 app.get("/", verifyJWT, (req: Request, res: Response) => {
