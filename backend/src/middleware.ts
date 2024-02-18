@@ -12,7 +12,7 @@ export function verifyJWT(req: CustomRequest, res: Response, next: NextFunction)
     }
 
     try {
-        const decoded = jwt.verify(token, 'shipping') as string; // Cast decoded to string or undefined
+        const decoded = jwt.verify(token, 'shipping') as string; // Cast decoded to string 
         if (decoded !== undefined) {
             req.phoneNumber = decoded; // Attach user's phone number to request object
             next(); // Call next middleware
