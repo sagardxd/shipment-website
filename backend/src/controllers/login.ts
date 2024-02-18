@@ -16,9 +16,8 @@ export function generateToken(phoneNumber: string) {
 
 //function for sending otp
 export async function sendOTP(phoneNumber: string) {
-
     try {
-        await client.verify.services(verifySid).verifications.create({ to: phoneNumber, channel: "sms" });
+        await client.verify.v2.services(verifySid).verifications.create({ to: phoneNumber, channel: "sms" });
         console.log("OTP sent successfully.");
         return true;
     } catch (error) {
@@ -31,7 +30,7 @@ export async function sendOTP(phoneNumber: string) {
 export async function verifyOTP(phoneNumber: string, otpCode: string) {
 
     try {
-        const verificationCheck = await client.verify.services(verifySid).verificationChecks.create({ to: phoneNumber, code: otpCode });
+        const verificationCheck = await client.verify.v2.services(verifySid).verificationChecks.create({ to: phoneNumber, code: otpCode });
         console.log("OTP verification status:", verificationCheck.status);
 
         if (verificationCheck.status === 'approved') {
