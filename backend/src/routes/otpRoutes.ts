@@ -11,9 +11,8 @@ router.post("/send-otp", async (req: Request, res: Response) => {
     try {
         // Check if a user with the provided phone number already exists
         const existingUser = await prisma.user.findUnique({
-            where: { phoneNumber:phoneNumber }
+            where: { phoneNumber: phoneNumber }
         });
-
         if (existingUser) {
             return res.status(400).json({ message: "User with this phone number already exists." });
         }
@@ -30,8 +29,7 @@ router.post("/send-otp", async (req: Request, res: Response) => {
         console.error("Error sending OTP:", error);
         return res.status(500).json({ message: "Failed to send OTP." });
     }
-
-})
+});
 
 router.post("/verify", async (req: Request, res: Response) => {
     const { phoneNumber, otpCode } = req.body;
@@ -46,7 +44,7 @@ router.post("/verify", async (req: Request, res: Response) => {
             token: token
         });
     }else {
-        res.status(400).json({ message: "Invalid OTP." });
+       return res.status(400).json({ message: "Invalid OTP." });
     }
 
    return res.status(500).json({ message: "Failed to verify OTP." });
