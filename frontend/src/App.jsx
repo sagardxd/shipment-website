@@ -1,4 +1,5 @@
 import Banner from "./components/Banner"
+import Features from "./components/Features"
 import Navbar from "./components/Navbar"
 import PhoneNumber from "./components/PhoneNumber"
 
@@ -8,6 +9,7 @@ function App() {
       <PhoneNumber/>
       <Navbar />
       <Banner />
+      <Features/>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
-import otpRoute from './routes/otpRoutes'
+import loginRoute from './routes/login'
 import registerRoute from './routes/register'
 import dotenv from 'dotenv';
 import { verifyJWT } from './middleware';
@@ -11,7 +11,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/login", otpRoute);
+app.use("/login", loginRoute);
 app.use("/register",registerRoute)
 
 //home
