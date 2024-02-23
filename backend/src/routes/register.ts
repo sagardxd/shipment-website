@@ -1,18 +1,29 @@
 import express, { Request, Response } from 'express';
+import {z} from 'zod'
 import { sendOTP, verifyOTP,generateToken } from '../controllers/login';
 import { PrismaClient } from '@prisma/client';
+import { phoneNumberSchema } from '../zod/login';
+import { userSchema } from '../zod/register';
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.post("/send-otp", async(req:Request, res: Response) => {
-    const {phoneNumber} = req.body;
+//type inference
+type userBody = z.infer<typeof userSchema>
 
+router.post("/send-otp", async(req:Request, res: Response) => {
+    const result = phoneNumberSchema.safeParse(req.body);
+    const { phoneNumber } = req.body;
+
+    if (!(result.success)) {
+        return res.status(411).json({msg:"Input errors", error: result.error});
+      }
+console.log(result.success)
     const existingUser = await prisma.user.findUnique({
         where: { phoneNumber: phoneNumber }
     });
     if (existingUser) {
-        return res.status(400).json({ message: "User with this phone number already exists." });
+        return res.status(400).json({ message: "User with this phone number already exists, Please login." });
     }
     
     const otp = await sendOTP(phoneNumber);
@@ -26,20 +37,26 @@ router.post("/send-otp", async(req:Request, res: Response) => {
 })
 
 router.post("/verify", async (req: Request, res: Response) => {
-    const { name, email, phoneNumber, otpCode } = req.body;
-    const isVerified = await verifyOTP(phoneNumber, otpCode);
+    const result = userSchema.safeParse(req.body);
+    const userData: userBody = req.body;
+
+    if (!(result.success)) {
+        return res.status(411).json({msg:"Input errors", error: result.error});
+      }
+
+    const isVerified = await verifyOTP(userData.phoneNumber, userData.otpCode);
 
     if (isVerified) {
         //creating jwt
-        const token = generateToken(phoneNumber);
+        const token = generateToken(userData.phoneNumber);
         res.cookie('jwt', token);
 
         //adding the user in db
         const user = await prisma.user.create({
             data:{
-                name,
-                email,
-                phoneNumber
+                name: userData.name,
+                email: userData.email,
+                phoneNumber:userData.phoneNumber
             }
         })
         
@@ -51,9 +68,6 @@ router.post("/verify", async (req: Request, res: Response) => {
     }else {
         return res.status(400).json({ message: "Invalid OTP." });
     }
-
-   return res.status(500).json({ message: "Failed to verify OTP." });
-
 })
 
 export default router;
