@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import loginRoute from './routes/login'
 import registerRoute from './routes/register'
+import adminRoute from './routes/admin'
 import dotenv from 'dotenv';
 import { verifyJWT } from './middleware';
 dotenv.config();
@@ -13,6 +14,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/login", loginRoute);
 app.use("/register",registerRoute)
+app.use("/admin",adminRoute)
+
 
 //home
 app.get("/", verifyJWT, (req: Request, res: Response) => {
