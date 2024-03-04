@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/userData", async(req: Request,res: Response) => {
+router.get("/alluserData", async(req: Request,res: Response) => {
     const allUserData = await prisma.user.findMany();
     if(allUserData){
         return res.status(200).json({allUserData: allUserData});
@@ -12,6 +12,8 @@ router.get("/userData", async(req: Request,res: Response) => {
         return res.json({error: "error while fetching"})
     }
 })
+
+router.post("/signup")
 
 
 export default router;

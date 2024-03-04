@@ -1,16 +1,20 @@
-import Banner from "./components/Banner"
-import Features from "./components/Features"
-import Navbar from "./components/Navbar"
-import PhoneNumber from "./components/PhoneNumber"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Track from "./pages/Track";
+
+
 
 function App() {
   return (
-    <div className="flex flex-col w-full h-[2000px] bg-[#f1f1f1]">
-      <PhoneNumber/>
-      <Navbar />
-      <Banner />
-      <Features/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/track-package" element={<Track />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+
+      </Routes>
+    </BrowserRouter>
   )
 }
 
