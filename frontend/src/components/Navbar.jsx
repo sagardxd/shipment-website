@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
-
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
+    const navlink = [
+        { title: 'Home', link: '/' },
+        { title: 'Track Package', link: '/track' },
+        { title: 'About us', link: '/about' },
+        { title: 'Service', link: '/service' }]
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -24,8 +31,8 @@ const Navbar = () => {
                     <h3>BomBino</h3>
                 </span>
                 <div className='flex gap-12 text-md items-center w-auto text-gray-500 '>
-                    {['Home', 'Track Package', 'About us', 'Service', 'Resources'].map((linkText, index) => (
-                        <div key={index} className='hover:text-black'>{linkText}</div>
+                    {navlink.map((link, index) => (
+                        <div key={index} onClick={() => { navigate(`/${link.link}`) }} className='hover:text-black'>{link.title}</div>
                     ))}
                 </div>
                 <div className='text-md bg-black text-white px-5 py-2 '>
