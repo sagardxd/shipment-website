@@ -1,11 +1,9 @@
 import express, { Request, Response } from 'express';
 import {z} from 'zod'
 import { sendOTP, verifyOTP,generateToken } from '../controllers/login';
-import { PrismaClient } from '@prisma/client';
 import { phoneNumberSchema } from '../zod/login';
 import { userSchema } from '../zod/register';
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 //type inference

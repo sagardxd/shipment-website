@@ -1,10 +1,8 @@
 import express, { Request, Response } from 'express';
 import {z} from 'zod';
 import { sendOTP, verifyOTP, generateToken } from '../controllers/login';
-import { PrismaClient } from "@prisma/client";
 import { otpSchema, phoneNumberSchema } from '../zod/login';
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 type OtpScehmaType = z.infer<typeof otpSchema>;
