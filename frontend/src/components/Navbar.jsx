@@ -6,12 +6,14 @@ const Navbar = () => {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
     const navlink = [
-        { title: 'Home', link: '/' },
-        { title: 'Track Package', link: '/track' },
-        { title: 'About us', link: '/about' },
-        { title: 'Service', link: '/service' }]
+        { title: 'Home', link: '' },
+        { title: 'Track Package', link: 'track' },
+        { title: 'About us', link: 'about' },
+        { title: 'Service', link: 'service' }]
 
-    const navigate = useNavigate();
+        const navigate = (path) => {
+            window.location.href = `http://localhost:5173${path}`;
+        };
 
     useEffect(() => {
         const handleScroll = () => {

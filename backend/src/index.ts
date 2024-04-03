@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser';
 import loginRoute from './routes/login'
 import registerRoute from './routes/register'
@@ -6,6 +7,15 @@ import adminRoute from './routes/admin'
 import dotenv from 'dotenv';
 import { verifyJWT } from './middleware';
 dotenv.config();
+
+//connecting to database
+const uri = process.env.MONGO_URL;
+if (!uri) {
+  throw new Error('MONGO_URL environment variable is not defined.');
+}
+mongoose.connect(uri)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((error) => console.error("Error connecting to MongoDB:", error));
 
 const app = express();
 const PORT = process.env.PORT;
