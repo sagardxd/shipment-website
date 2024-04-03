@@ -1,22 +1,22 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import jwt from 'jsonwebtoken';
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-// Twillo stuff
-const accountSid = process.env.TWILIO_ACC_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const verifySid = "VA72f2e5e8c17ca3c01128b8af2687b3bc";
-const client = require("twilio")(accountSid, authToken);
-
-//function to generate jwt
+// Function to generate JWT
 export function generateToken(phoneNumber: string) {
     return jwt.sign({ phoneNumber }, "shipping", { expiresIn: '7d' }); // Change expiresIn as needed
 }
 
-//function for sending otp
+// Function for sending OTP
 export async function sendOTP(phoneNumber: string) {
     try {
-        await client.verify.v2.services(verifySid).verifications.create({ to: phoneNumber, channel: "sms" });
+        // Create a Verify service
+        const service = await client.verify.services.create({ friendlyName: 'My Verify Service' });
+
+        // Send OTP using the newly created service SID
+        await client.verify.services(service.sid).verifications.create({ to: phoneNumber, channel: "sms" });
+
         console.log("OTP sent successfully.");
         return true;
     } catch (error) {
@@ -25,11 +25,13 @@ export async function sendOTP(phoneNumber: string) {
     }
 }
 
-//function for verifying otp
+// Function for verifying OTP
 export async function verifyOTP(phoneNumber: string, otpCode: string) {
-
     try {
-        const verificationCheck = await client.verify.v2.services(verifySid).verificationChecks.create({ to: phoneNumber, code: otpCode });
+        // Verify OTP using the service SID obtained during OTP sending
+        const verificationCheck = await client.verify.services(process.env.TWILIO_VERIFY_SID)
+            .verificationChecks.create({ to: phoneNumber, code: otpCode });
+
         console.log("OTP verification status:", verificationCheck.status);
 
         if (verificationCheck.status === 'approved') {
@@ -39,11 +41,6 @@ export async function verifyOTP(phoneNumber: string, otpCode: string) {
         }
     } catch (error) {
         console.error("Error verifying OTP:", error);
+        return false;
     }
 }
-
-
-
-
-
-
