@@ -3,7 +3,7 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 
 // Twillo stuff
-const accountSid = "AC66bcd0e082e03b41a347f1a7208d9812";
+const accountSid = "AC8fa2b1c0a3546dafd2d9027c29f7e465";
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const verifySid = "VA72f2e5e8c17ca3c01128b8af2687b3bc";
 const client = require("twilio")(accountSid, authToken);

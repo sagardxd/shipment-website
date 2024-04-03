@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import {z} from 'zod';
 import { sendOTP, verifyOTP, generateToken } from '../controllers/login';
 import { otpSchema, phoneNumberSchema } from '../zod/login';
+import User from '../models/user'; // Import the User model
 
 const router = express.Router();
 
@@ -17,9 +18,7 @@ router.post("/send-otp", async (req: Request, res: Response) => {
 
     try {
         // Check if a user with the provided phone number already exists
-        const existingUser = await prisma.user.findUnique({
-            where: { phoneNumber: phoneNumber }
-        });
+        const existingUser = await User.findOne({ phoneNumber: phoneNumber });
         if (!existingUser) {
             return res.status(400).json({ message: "User with this phone number don't exists, register your number." });
         }
