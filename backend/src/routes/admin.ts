@@ -1,19 +1,17 @@
 import express, { Request, Response, Router } from 'express';
-import { PrismaClient } from "@prisma/client";
+import  User  from '../models/user'; // Import the User model
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/alluserData", async(req: Request,res: Response) => {
-    const allUserData = await prisma.user.findMany();
-    if(allUserData){
-        return res.status(200).json({allUserData: allUserData});
-    }else{
-        return res.json({error: "error while fetching"})
+// Route to fetch all user data
+router.get("/allUserData", async (req: Request, res: Response) => {
+    try {
+        const allUserData = await User.find();
+        return res.status(200).json({ allUserData });
+    } catch (error) {
+        console.error("Error while fetching:", error);
+        return res.status(500).json({ error: "Error while fetching data" });
     }
-})
-
-router.post("/signup")
-
+});
 
 export default router;
