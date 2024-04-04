@@ -1,5 +1,6 @@
 import express, { Request, Response, Router } from 'express';
-import Trackshipment from '../models/trackshipment'; // Import the User model
+import User from '../models/user'; 
+import Trackshipment from '../models/trackshipment'; 
 
 
 const router = express.Router();
@@ -18,7 +19,7 @@ router.get("/allUserData", async (req: Request, res: Response) => {
 export default router;
 
 // Route for admin to add data
-router.post("/admin/add-data", adminAuthMiddleware, async (req: Request, res: Response) => {
+router.post("/admin/add-data", async (req: Request, res: Response) => {
     try {
         // Extract data from request body
         const {
