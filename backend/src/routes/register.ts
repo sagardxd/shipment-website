@@ -50,13 +50,13 @@ router.post("/verify", async (req: Request, res: Response) => {
         res.cookie('jwt', token);
 
         //adding the user in db
+        console.log(userData)
+        console.log("heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
         const user = await User.create({
-            data: {
-                name: userData.name,
-                email: userData.email,
-                phoneNumber: userData.phoneNumber
-            }
-        })
+            name: userData.name,
+            email: userData.email,
+            phoneNumber: userData.phoneNumber,
+        });
 
         return res.status(200).json({
             message: "OTP verified successfully.",

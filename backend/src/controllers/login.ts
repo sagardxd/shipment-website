@@ -1,22 +1,24 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import jwt from 'jsonwebtoken';
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-// Function to generate JWT
+// Twillo stuff
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const verifySid = process.env.TWILIO_VERIFY_SID;
+const client = require("twilio")(accountSid, authToken, {
+    lazyloading: true
+});
+
+//function to generate jwt
 export function generateToken(phoneNumber: string) {
     return jwt.sign({ phoneNumber }, "shipping", { expiresIn: '7d' }); // Change expiresIn as needed
 }
 
-// Function for sending OTP
+//function for sending otp
 export async function sendOTP(phoneNumber: string) {
     try {
-        // Create a Verify service
-        const service = await client.verify.services.create({ friendlyName: 'My Verify Service' });
-
-        // Send OTP using the newly created service SID
-        await client.verify.services(service.sid).verifications.create({ to: phoneNumber, channel: "sms" });
-
+        await client.verify.v2.services(verifySid).verifications.create({ to: phoneNumber, channel: "sms" });
         console.log("OTP sent successfully.");
         return true;
     } catch (error) {
@@ -25,22 +27,21 @@ export async function sendOTP(phoneNumber: string) {
     }
 }
 
-// Function for verifying OTP
+//function for verifying otp
+// Function for verifying otp
 export async function verifyOTP(phoneNumber: string, otpCode: string) {
     try {
-        // Verify OTP using the service SID obtained during OTP sending
-        const verificationCheck = await client.verify.services(process.env.TWILIO_VERIFY_SID)
-            .verificationChecks.create({ to: phoneNumber, code: otpCode });
-
+        const verificationCheck = await client.verify.v2.services(verifySid).verificationChecks.create({ to: phoneNumber, code: otpCode });
         console.log("OTP verification status:", verificationCheck.status);
 
-        if (verificationCheck.status === 'approved') {
-            return true;
-        } else {
-            return false;
-        }
+        return verificationCheck.status === 'approved';
     } catch (error) {
         console.error("Error verifying OTP:", error);
-        return false;
+        return false; // Return false indicating verification failed
     }
 }
+
+
+
+
+
