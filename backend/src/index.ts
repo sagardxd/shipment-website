@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser';
 import loginRoute from './routes/login'
 import registerRoute from './routes/register'
-import adminRoute from './routes/admin'
+import adminTaskRoute from './routes/adminTask'
+import adminLogin from './routes/adminLogin'
 import dotenv from 'dotenv';
 import { verifyJWT } from './middleware';
 dotenv.config();
@@ -24,7 +25,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/login", loginRoute);
 app.use("/register",registerRoute)
-app.use("/admin",adminRoute)
+app.use("/admin",adminTaskRoute)
+app.use("admin/login", adminLogin)
 
 
 //home
