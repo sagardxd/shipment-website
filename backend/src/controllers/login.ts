@@ -13,7 +13,7 @@ const client = require("twilio")(accountSid, authToken, {
 
 //function to generate jwt
 export function generateToken(identifier: string) {
-    return jwt.sign({ identifier }, jwtSecret || "shipping", { expiresIn: '7d' }); // Change expiresIn as needed
+    return jwt.sign({ identifier }, jwtSecret || "shippingNigga", { expiresIn: '7d' }); // Change expiresIn as needed
 }
 
 //function for sending otp
