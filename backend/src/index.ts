@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use("/login", loginRoute);
 app.use("/register",registerRoute)
 app.use("/admin",adminTaskRoute)
-app.use("admin/login", adminLogin)
+app.use("/admin-auth", adminLogin)
 
 
 //home
