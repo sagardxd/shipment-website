@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Admin, createDefaultAdmin } from '../models/admin';
-import { generateToken } from '../controllers/login';
+import { generateTokenAdmin } from '../controllers/login';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post("/", async (req: Request, res: Response) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        const token = generateToken(admin.email);
+        const token = generateTokenAdmin(admin.email);
         res.cookie('jwt', token);
 
         res.status(200).json({ message: 'Login successful' });
