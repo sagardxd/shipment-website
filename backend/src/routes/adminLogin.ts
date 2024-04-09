@@ -1,10 +1,8 @@
 import express, { Request, Response } from 'express';
-import { Admin, createDefaultAdmin } from '../models/admin';
+import { Admin } from '../models/admin';
 import { generateTokenAdmin } from '../controllers/login';
 
 const router = express.Router();
-
-createDefaultAdmin();
 
 router.post("/", async (req: Request, res: Response) => {
     try {
