@@ -6,14 +6,19 @@ import jwt from 'jsonwebtoken';
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const verifySid = process.env.TWILIO_VERIFY_SID;
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecretUser = process.env.JWT_SECRET_USER;
+const jwtSecretAdmin = process.env.JWT_SECRET_ADMIN;
 const client = require("twilio")(accountSid, authToken, {
     lazyloading: true
 });
 
 //function to generate jwt
-export function generateToken(identifier: string) {
-    return jwt.sign({ identifier }, jwtSecret || "shippingNigga", { expiresIn: '7d' }); // Change expiresIn as needed
+export function generateTokenUser(identifier: string) {
+    return jwt.sign({ identifier }, jwtSecretUser || "shippingNiggaUser", { expiresIn: '7d' }); // Change expiresIn as needed
+}
+
+export function generateTokenAdmin(identifier: string) {
+    return jwt.sign({ identifier }, jwtSecretAdmin || "shippingNiggaAdmin", { expiresIn: '7d' }); // Change expiresIn as needed
 }
 
 //function for sending otp
