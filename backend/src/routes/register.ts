@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { z } from 'zod'
-import { sendOTP, verifyOTP, generateToken } from '../controllers/login';
+import { sendOTP, verifyOTP, generateTokenUser } from '../controllers/login';
 import { phoneNumberSchema } from '../zod/login';
 import { userSchema } from '../zod/register';
 import User from '../models/user'; // Import the User model
@@ -46,7 +46,7 @@ router.post("/verify", async (req: Request, res: Response) => {
 
     if (isVerified) {
         //creating jwt
-        const token = generateToken(userData.phoneNumber);
+        const token = generateTokenUser(userData.phoneNumber);
         res.cookie('jwt', token);
 
         //adding the user in db

@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import {z} from 'zod';
-import { sendOTP, verifyOTP, generateToken } from '../controllers/login';
+import { sendOTP, verifyOTP, generateTokenUser } from '../controllers/login';
 import { otpSchema, phoneNumberSchema } from '../zod/login';
 import User from '../models/user'; // Import the User model
 
@@ -49,7 +49,7 @@ router.post("/verify", async (req: Request, res: Response) => {
     const isVerified = await verifyOTP(updatedBody.phoneNumber, updatedBody.otpCode);
     if (isVerified) {
         //creating jwt
-        const token = generateToken(updatedBody.phoneNumber);
+        const token = generateTokenUser(updatedBody.phoneNumber);
         res.cookie('jwt', token);
         return  res.status(200).json({
             message: "OTP verified successfully.",
