@@ -16,7 +16,7 @@ export function verifyJWT(req: userCustomRequest, res: Response, next: NextFunct
     }
 
     try {
-        const decoded = jwt.verify(token,  process.env.JWT_SECRET || "shippingNigga") as string; // Cast decoded to string 
+        const decoded = jwt.verify(token,  process.env.JWT_SECRET || "shippingNiggaUser") as string; // Cast decoded to string 
         if (decoded !== undefined) {
             req.phoneNumber = decoded; // Attach user's phone number to request object
             next(); // Call next middleware
@@ -37,7 +37,7 @@ export function isAdmin(req: amdinCustomRequest, res: Response, next: NextFuncti
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || "shippingNigga") as string ;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || "shippingNiggaAdmin") as string ;
         if (decoded !== undefined) {
             req.email = decoded; 
             next(); // Call next middleware
