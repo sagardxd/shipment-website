@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import { Admin } from '../models/admin';
-import { generateTokenAdmin } from '../controllers/login';
+import { Admin } from '../../models/admin';
+import { generateTokenAdmin } from '../../controllers/login';
 
 const router = express.Router();
 

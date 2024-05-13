@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser';
-import loginRoute from './routes/login'
-import registerRoute from './routes/register'
-import adminTaskRoute from './routes/adminTask'
-import adminLogin from './routes/adminLogin'
+import loginRoute from './routes/auth/login'
+import registerRoute from './routes/auth/register'
+import adminTaskRoute from './routes/admin/adminTask'
+import adminLogin from './routes/admin/adminLogin'
 import dotenv from 'dotenv';
 import { verifyJWT } from './middleware';
 dotenv.config();

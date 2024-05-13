@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import { z } from 'zod'
-import { sendOTP, verifyOTP, generateTokenUser } from '../controllers/login';
-import { phoneNumberSchema } from '../zod/login';
-import { userSchema } from '../zod/register';
-import User from '../models/user'; // Import the User model
+import { sendOTP, verifyOTP, generateTokenUser } from '../../controllers/login';
+import { phoneNumberSchema } from '../../zod/login';
+import { userSchema } from '../../zod/register';
+import User from '../../models/user'; // Import the User model
 
 
 const router = express.Router();

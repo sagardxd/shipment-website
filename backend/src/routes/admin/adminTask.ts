@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import Trackshipment from '../models/trackshipment'; 
-import { isAdmin } from '../middleware';
+import Trackshipment from '../../models/trackshipment'; 
+import { isAdmin } from '../../middleware';
 
 
 const router = express.Router();
