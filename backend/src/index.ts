@@ -7,6 +7,8 @@ import adminTaskRoute from './routes/admin/adminTask'
 import adminLogin from './routes/admin/adminLogin'
 import pincode from "./routes/shipping/pincode"
 import details from "./routes/shipping/details"
+import address from "./routes/shipping/address"
+import services from "./routes/shipping/services"
 
 import dotenv from 'dotenv';
 import { verifyJWT } from './middleware';
@@ -30,7 +32,7 @@ app.use("/login", loginRoute);
 app.use("/register",registerRoute)
 app.use("/admin",adminTaskRoute)
 app.use("/admin-auth", adminLogin)
-app.use("/shipment", pincode, details)
+app.use("/shipment", pincode, details, address, services)
 
 
 //home

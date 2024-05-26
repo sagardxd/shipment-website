@@ -9,7 +9,6 @@ router.get("/get-services", async (req:Request, res: Response) => {
                    "A": 200,
                    "B": 130,
                    "C": 230,
-
                 })
            
            
@@ -25,7 +24,6 @@ router.post("/set-service", async (req:Request, res: Response) => {
    
    
 })
-
 
 
 export default router;
