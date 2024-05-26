@@ -9,6 +9,7 @@ import pincode from "./routes/shipping/pincode"
 import details from "./routes/shipping/details"
 import address from "./routes/shipping/address"
 import services from "./routes/shipping/services"
+import cors from 'cors'
 
 import dotenv from 'dotenv';
 import { verifyJWT } from './middleware';
@@ -28,6 +29,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 app.use("/login", loginRoute);
 app.use("/register",registerRoute)
 app.use("/admin",adminTaskRoute)
