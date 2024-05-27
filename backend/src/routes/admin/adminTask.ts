@@ -28,7 +28,7 @@ router.get('/details/:awbNumber', async(req: Request, res: Response) => {
                return res.status(404).json({ error: 'Shipment not found' });
            }
    
-           return res.status(200).json({ shipment: shipment });
+           return res.status(200).json(shipment );
 })
 
 
