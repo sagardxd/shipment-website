@@ -4,19 +4,31 @@ import { isAdmin } from '../../middleware';
 
 
 const router = express.Router();
-router.use(isAdmin);
+// router.use(isAdmin);
 
 
 router.get('/all-data', async(req: Request, res: Response) => {
     try {
         const shipments = await Trackshipment.find();
-        res.status(200).json(shipments);
+        return res.status(200).json(shipments);
     }
 
     catch (error) {
         console.error('Error adding data:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
+})
+
+router.get('/details/:awbNumber', async(req: Request, res: Response) => {
+    const awbNumber = req.params.awbNumber;
+           // Find the shipment by AWB number
+           const shipment = await Trackshipment.findOne({ awbNumber });
+
+           if (!shipment) {
+               return res.status(404).json({ error: 'Shipment not found' });
+           }
+   
+           return res.status(200).json({ shipment: shipment });
 })
 
 
@@ -54,7 +66,7 @@ router.post("/add-data", async (req: Request, res: Response) => {
         // Save track shipment document to the database
         await trackShipment.save();
         
-        res.status(201).json({ message: 'Data added successfully' });
+        return res.status(201).json({ message: 'Data added successfully' });
     } catch (error) {
         console.error('Error adding data:', error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -80,7 +92,7 @@ router.put("/update-shipment/:awbNumber", async (req: Request, res: Response) =>
         // Save the updated shipment
         await shipment.save();
 
-        res.status(200).json({ message: 'Shipment updated successfully' });
+       return res.status(200).json({ message: 'Shipment updated successfully' });
     } catch (error) {
         console.error('Error updating shipment:', error);
         res.status(500).json({ message: 'Internal Server Error' });
