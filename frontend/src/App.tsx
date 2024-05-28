@@ -4,6 +4,7 @@ import AdminDashboard from "./pages/AdminDashboard"
 import ItemDetails from "./pages/ItemDetails"
 import UpdateShipment from "./pages/UpdateShipment"
 import AddShipment from "./pages/AddShipment"
+import LandingPage from "./pages/LandingPage"
 
 function App() {
 
@@ -15,6 +16,8 @@ function App() {
         <Route path="/details/:awbNumber" element={<ItemDetails />} />
         <Route path="/update/:awbNumber" element={<UpdateShipment />} />
         <Route path="/add-shipment" element={<AddShipment />} />
+        <Route path="/" element={<LandingPage />} />
+
 
     </Routes>
     </BrowserRouter>
