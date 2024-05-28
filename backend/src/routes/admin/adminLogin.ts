@@ -17,7 +17,14 @@ router.post("/", async (req: Request, res: Response) => {
         }
 
         const token = generateTokenAdmin(admin.email);
-        res.cookie('jwt', token);
+        res.cookie('jwt', token, {
+            httpOnly: true, // Prevents access from JavaScript
+            // secure: process.env.NODE_ENV === 'production', // Only sent over HTTPS in production
+            sameSite: 'strict', // Limits cookie to same-site requests
+            domain: 'localhost', // Your domain
+            path: '/', // Cookie accessible from all paths
+        });
+
 
         res.status(200).json({ message: 'Login successful' });
     } catch (error) {

@@ -29,7 +29,10 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 app.use("/login", loginRoute);
 app.use("/register",registerRoute)
 app.use("/admin",adminTaskRoute)

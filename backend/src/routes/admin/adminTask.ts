@@ -4,7 +4,7 @@ import { isAdmin } from '../../middleware';
 
 
 const router = express.Router();
-// router.use(isAdmin);
+router.use(isAdmin);
 
 
 router.get('/all-data', async(req: Request, res: Response) => {
