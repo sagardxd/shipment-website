@@ -28,7 +28,9 @@ const AddShipment = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/admin/add-data', item);
+      await axios.post('http://localhost:3000/admin/add-data', item, {
+        withCredentials: true,
+      });
       navigate('/admin-dashboard');
     } catch (err) {
       console.error("Error adding shipment:", err);

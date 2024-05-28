@@ -26,7 +26,9 @@ const UpdateShipment = () => {
     e.preventDefault();
     if (item) {
       try {
-        await axios.put(`http://localhost:3000/admin/update-shipment/${awbNumber}`, item);
+        await axios.put(`http://localhost:3000/admin/update-shipment/${awbNumber}`, item, {
+          withCredentials: true,
+        });
         navigate(`/details/${awbNumber}`);
       } catch (err) {
         console.error("Error updating item:", err);
