@@ -14,7 +14,9 @@ const ItemDetails = () => {
   return (
     <div>
       {item && <ShipmentDetails item={item} />}
-      <button onClick={() => navigate(`/update/${awbNumber}`)}>Update</button>
+      <button 
+      className="bg-black text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      onClick={() => navigate(`/update/${awbNumber}`)}>Update</button>
     </div>
   );
 };
