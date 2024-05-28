@@ -73,6 +73,7 @@ router.post("/add-data", async (req: Request, res: Response) => {
     }
 });
 
+
 // Route for admin to update shipment by AWB number
 router.put("/update-shipment/:awbNumber", async (req: Request, res: Response) => {
     try {
